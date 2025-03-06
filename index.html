@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анимированный фон</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Основные цвета */
+            --primary-color: #FF0055;
+            --secondary-color: #00FF8C;
+            --text-color: #fff;
+            
+            /* Градиентные цвета */
+            --gradient-1: rgba(255, 0, 85, 0.7);
+            --gradient-2: rgba(0, 255, 140, 0.7);
+            --gradient-3: rgba(255, 0, 255, 0.7);
+            --gradient-4: rgba(0, 255, 255, 0.7);
+            --gradient-5: rgba(255, 0, 85, 0.7);
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #0d1117;
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Первый слой анимированного фона */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(
+                45deg,
+                var(--gradient-1) 0%,
+                var(--gradient-2) 25%,
+                var(--gradient-3) 50%,
+                var(--gradient-4) 75%,
+                var(--gradient-5) 100%
+            );
+            background-size: 300% 300%;
+            animation: gradientBG 3s ease infinite;
+            opacity: 0.5;
+            filter: blur(80px);
+        }
+
+        /* Второй слой анимированного фона с пульсацией */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(
+                circle at 50% 50%,
+                var(--gradient-3) 0%,
+                transparent 50%
+            );
+            opacity: 0.4;
+            animation: pulseGlow 3s ease-in-out infinite;
+            filter: blur(50px);
+        }
+
+        /* Анимация движения градиента */
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 50% 50%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 50% 50%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        /* Анимация пульсации свечения */
+        @keyframes pulseGlow {
+            0% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+        }
+
+        /* Обновленные стили для контента */
+        .content {
+            text-align: center;
+            padding: 5rem;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1000px;
+            width: 90%;
+            position: relative;
+            min-height: 400px;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 0 50px rgba(255, 0, 85, 0.3);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Неоновый текст с тенями */
+        h1 span {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px var(--primary-color));
+            display: block;
+            animation: textGlow 3s ease-in-out infinite;
+            line-height: 1.1;
+        }
+
+        /* Анимированная подчеркивающая линия */
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                var(--primary-color) 50%,
+                transparent 100%
+            );
+            animation: lineWidth 3s ease-in-out infinite;
+            transform: translateX(-50%);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: none;
+            white-space: pre-wrap;
+            text-align: center;
+            max-width: 500px;
+            margin-top: 2rem;
+        }
+
+        /* Анимации */
+        @keyframes contentFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 15px var(--primary-color));
+                transform: scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 30px var(--primary-color))
+                       drop-shadow(0 0 50px var(--secondary-color));
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes lineWidth {
+            0%, 100% {
+                opacity: 0.5;
+                width: 60%;
+            }
+            50% {
+                opacity: 1;
+                width: 100%;
+            }
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* Добавим анимированные частицы */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: particleFloat 3s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Стили для нижней секции */
+        .bottom-text {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            opacity: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Контейнер для иконок и контакта */
+        .contact-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-link {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255,255,255,0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--primary-color);
+            text-decoration: none;
+            color: white;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        .cursor-flames {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .flame {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 100%;
+            background: rgba(255, 0, 85, 0.6);
+            box-shadow: 
+                0 0 8px var(--current-color, var(--primary-color)),
+                0 0 15px var(--current-color, var(--primary-color)),
+                0 0 30px var(--current-color, var(--secondary-color));
+            animation: flameFloat 1.2s ease-out both;
+            opacity: 1;
+            pointer-events: none;
+            --current-color: var(--primary-color);
+        }
+
+        @keyframes flameFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(var(--moveX), var(--moveY)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Добавляем анимацию смены цветов */
+        @keyframes neonColorChange {
+            0% { --current-color: #ff0055; }
+            20% { --current-color: #00ff8c; }
+            40% { --current-color: #00ffff; }
+            60% { --current-color: #ff00ff; }
+            80% { --current-color: #ffff00; }
+            100% { --current-color: #ff0055; }
+        }
+
+        /* Стили для плавающих иконок */
+        .floating-icons {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 100;
+            pointer-events: auto;
+        }
+
+        .icon-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            overflow: hidden;
+        }
+
+        .icon-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255,255,255,0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        .icon-button::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .icon-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .icon-button:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .icon-button i {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Стили для музыкального плеера */
+        .music-player {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .play-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .music-info {
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* Добавим медиа-запросы для мобильных устройств */
+        @media (max-width: 768px) {
+            .content {
+                padding: 2rem;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .contact-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .icon-button {
+                width: 40px;
+                height: 40px;
+            }
+
+            .contact-link {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            body::before,
+            body::after {
+                filter: blur(50px);
+            }
+
+            .flame {
+                display: none; /* Отключаем эффект следа на мобильных */
+            }
+        }
+
+        /* Добавим поддержку темной темы */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <!-- Частицы будут добавлены через JavaScript -->
+    </div>
+    <div class="content">
+        <h1>
+            <span>Анимированный</span>
+            <span>фон</span>
+        </h1>
+        <p>Пример страницы с красивым анимированным градиентным фоном и неоновым свечением.</p>
+    </div>
+
+    <div class="bottom-text">
+        <p class="question">Нужна такая страничка, анимация или фон?</p>
+        <div class="contact-container">
+            <button class="icon-button" data-tooltip="Поделиться">
+                <i class="fas fa-share-alt"></i>
+            </button>
+            <button class="icon-button" data-tooltip="Сохранить">
+                <i class="fas fa-bookmark"></i>
+            </button>
+            <a href="https://t.me/dmitryosiris" class="contact-link" target="_blank">
+                <i class="fab fa-telegram"></i> @dmitryosiris
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Добавление анимированных частиц
+        function createParticles() {
+            const container = document.querySelector('.particles');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Случайное положение
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Случайная задержка анимации
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Добавляем после существующего скрипта
+        function createCursorFlames() {
+            const flames = document.createElement('div');
+            flames.className = 'cursor-flames';
+            document.body.appendChild(flames);
+            
+            let lastX = 0;
+            let lastY = 0;
+            let lastTimeStamp = 0;
+
+            function createFlame(x, y, velocity) {
+                const flame = document.createElement('div');
+                flame.className = 'flame';
+                flame.style.left = (x - 4) + 'px';
+                flame.style.top = (y - 4) + 'px';
+                
+                // Размер пламени зависит от скорости движения
+                const size = Math.min(Math.max(velocity / 2, 10), 25);
+                flame.style.width = size + 'px';
+                flame.style.height = size + 'px';
+                
+                // Добавляем анимацию смены цветов
+                flame.style.animation = `
+                    flameFloat 1.2s ease-out both,
+                    neonColorChange 2s linear infinite
+                `;
+                
+                // Случайное направление движения
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 50 + 30;
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+                flame.style.setProperty('--moveX', moveX + 'px');
+                flame.style.setProperty('--moveY', moveY + 'px');
+                
+                // Случайная начальная фаза анимации цвета
+                flame.style.animationDelay = `0s, ${Math.random() * -2}s`;
+                
+                flames.appendChild(flame);
+                
+                setTimeout(() => flame.remove(), 1200);
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                const currentTime = Date.now();
+                const timeDelta = currentTime - lastTimeStamp;
+                
+                if (timeDelta > 0) {
+                    const velocity = Math.sqrt(
+                        Math.pow(e.clientX - lastX, 2) + 
+                        Math.pow(e.clientY - lastY, 2)
+                    ) / timeDelta * 10;
+                    
+                    if (velocity > 0 || Math.random() < 0.3) {
+                        createFlame(e.clientX, e.clientY, velocity);
+                    }
+                    
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                    lastTimeStamp = currentTime;
+                }
+            });
+
+            // Создаем взрыв пламени при клике
+            document.addEventListener('click', (e) => {
+                for (let i = 0; i < 20; i++) {
+                    createFlame(e.clientX, e.clientY, 20);
+                }
+            });
+        }
+
+        createCursorFlames();
+
+        // Добавляем после существующих скриптов
+        function typeText() {
+            const text = document.querySelector('.content p');
+            const originalText = text.textContent;
+            text.textContent = '';
+            text.style.opacity = '1';
+            text.style.transform = 'none';
+            
+            let i = 0;
+            const typing = setInterval(() => {
+                if (i < originalText.length) {
+                    text.textContent += originalText[i];
+                    i++;
+                } else {
+                    clearInterval(typing);
+                }
+            }, 30);
+        }
+
+        // Запускаем эффект печати после загрузки страницы
+        window.addEventListener('load', typeText);
+
+        // Добавляем функционал копирования
+        document.querySelector('.contact-link').addEventListener('click', function(e) {
+            navigator.clipboard.writeText('@dmitryosiris').then(() => {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'copied-tooltip';
+                tooltip.textContent = 'Скопировано!';
+                this.appendChild(tooltip);
+                
+                setTimeout(() => {
+                    tooltip.style.opacity = '1';
+                }, 10);
+                
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                    setTimeout(() => tooltip.remove(), 300);
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html> 
