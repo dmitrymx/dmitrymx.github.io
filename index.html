@@ -532,6 +532,36 @@
                 padding: 0.6rem 1.5rem;
                 font-size: 0.9rem;
             }
+            
+            /* Исправление позиции плавающих иконок */
+            .floating-icons {
+                left: 1rem;
+                top: auto;
+                bottom: 7rem;
+                transform: none;
+            }
+            
+            /* Уменьшаем размер иконок для мобильных */
+            .icon-button {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            /* Перемещаем музыкальный плеер */
+            .music-player {
+                right: 1rem;
+                bottom: 1rem;
+                padding: 0.3rem 0.8rem;
+            }
+            
+            /* Корректируем нижний текст */
+            .bottom-text {
+                bottom: 1rem;
+                width: 100%;
+                padding: 0 1rem;
+                box-sizing: border-box;
+            }
         }
 
         @media (max-width: 480px) {
@@ -541,6 +571,7 @@
 
             .content {
                 padding: 1.5rem;
+                min-height: 300px;
             }
 
             body::before,
@@ -550,6 +581,26 @@
 
             .flame {
                 display: none; /* Отключаем эффект следа на мобильных */
+            }
+            
+            /* Дополнительные корректировки для очень маленьких экранов */
+            .floating-icons {
+                display: none; /* Скрываем боковые иконки на очень маленьких экранах */
+            }
+            
+            .bottom-text {
+                position: relative;
+                margin-top: 2rem;
+                padding: 0 1rem;
+            }
+            
+            .contact-container {
+                margin-bottom: 1rem;
+            }
+            
+            /* Центрируем контент */
+            .content {
+                margin: 1rem auto;
             }
         }
 
