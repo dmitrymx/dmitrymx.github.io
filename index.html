@@ -508,6 +508,7 @@
             .content {
                 padding: 2rem;
                 width: 95%;
+                margin-bottom: 150px; /* Добавляем отступ снизу для контента */
             }
 
             h1 {
@@ -533,34 +534,29 @@
                 font-size: 0.9rem;
             }
             
-            /* Исправление позиции плавающих иконок */
+            /* Полностью переделываем расположение элементов */
             .floating-icons {
-                left: 1rem;
-                top: auto;
-                bottom: 7rem;
-                transform: none;
+                display: none; /* Скрываем боковые иконки на мобильных */
             }
             
-            /* Уменьшаем размер иконок для мобильных */
-            .icon-button {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
-            
-            /* Перемещаем музыкальный плеер */
-            .music-player {
-                right: 1rem;
-                bottom: 1rem;
-                padding: 0.3rem 0.8rem;
-            }
-            
-            /* Корректируем нижний текст */
+            /* Фиксируем нижний текст внизу экрана */
             .bottom-text {
-                bottom: 1rem;
+                position: fixed;
+                bottom: 0;
+                left: 0;
                 width: 100%;
-                padding: 0 1rem;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(10px);
+                padding: 1rem;
                 box-sizing: border-box;
+                z-index: 100;
+            }
+            
+            /* Делаем контактные кнопки в ряд */
+            .contact-container {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
             }
         }
 
@@ -572,6 +568,7 @@
             .content {
                 padding: 1.5rem;
                 min-height: 300px;
+                margin-bottom: 120px; /* Уменьшаем отступ для маленьких экранов */
             }
 
             body::before,
@@ -583,24 +580,30 @@
                 display: none; /* Отключаем эффект следа на мобильных */
             }
             
-            /* Дополнительные корректировки для очень маленьких экранов */
-            .floating-icons {
-                display: none; /* Скрываем боковые иконки на очень маленьких экранах */
+            /* Уменьшаем размер текста */
+            .question {
+                font-size: 0.9rem;
             }
             
+            /* Уменьшаем размер кнопок */
+            .icon-button {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            .contact-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            /* Уменьшаем отступы в нижней панели */
             .bottom-text {
-                position: relative;
-                margin-top: 2rem;
-                padding: 0 1rem;
+                padding: 0.7rem;
             }
             
             .contact-container {
-                margin-bottom: 1rem;
-            }
-            
-            /* Центрируем контент */
-            .content {
-                margin: 1rem auto;
+                gap: 0.5rem;
             }
         }
 
